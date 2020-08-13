@@ -4,18 +4,48 @@ export default {
         value: {
             type: Object,
             required: true,
-        }
+        },
     },
     data: () => ({
-        edit: false
+        edit: false,
+        form: {
+            name: '',
+            price: '',
+            count: ''
+        }
     }),
+    watch: {
+        value: {
+            immediate: true,
+            handler(product) {
+                Object.keys(this.form).forEach(field => {
+                    if (product[field]) {
+                        this.form[field] = product[field]
+                    }
+                })
+            }
+        }
+    },
     methods: {
-        editProduct() {
+        editProduct(evt) {
+            evt.preventDefault();
+            let priceChange = 'none'
+            if (+this.form.price < this.value.originalPrice) {
+                priceChange = 'down'
+            } else if (+this.form.price > this.value.originalPrice) {
+                priceChange = 'up'
+            }
+            const tempForm = {
+                name: this.form.name,
+                price: +this.form.price,
+                count: +this.form.count
+            }
+
             this.$emit('input', {
                 ...this.value,
+                ...tempForm,
                 edited: true,
-                price: 1,
-                priceChange: 'up'
+                priceChange
             })
             this.edit = false;
         },

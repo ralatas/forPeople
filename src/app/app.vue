@@ -13,7 +13,7 @@
             <div
                 v-for="(group, key) in groups"
                 :key="key"
-                class="col-6 mb-3"
+                class="col-md-6 col-sm-12 col-xs-12 mb-3"
             >
                 <b-card >
                     <template v-slot:header>
@@ -26,14 +26,12 @@
                     </template>
 
                     <b-collapse :id="`part${ key }`" visible>
-                        <b-card-body>
-                            <div
-                                v-for="product in group.products"
-                                :key="product.id"
-                            >
-                                <product-item v-model="product.value" />
-                            </div>
-                        </b-card-body>
+                        <div
+                            v-for="product in group.products"
+                            :key="product.id"
+                        >
+                            <product-item v-model="product.value" />
+                        </div>
                     </b-collapse>
                 </b-card>
             </div>

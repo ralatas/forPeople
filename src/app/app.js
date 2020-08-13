@@ -62,6 +62,7 @@ export default {
                         id: item.T,
                         name: names[item.G].B[item.T].N,
                         price: +(item.C * course).toFixed(2),
+                        originalPrice: +(item.C * course).toFixed(2),
                         edited: false,
                         count: item.P
                     }

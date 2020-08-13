@@ -10,6 +10,15 @@
         padding-right: 10px;
     }
 
+    .text {
+        &.up {
+            color: red;
+        }
+        &.down {
+            color: green;
+        }
+    }
+
     .edit-container {
         margin-top: -4px;
     }
