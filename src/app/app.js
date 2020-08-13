@@ -1,9 +1,12 @@
+import ProductItem from '@/components/product-item/product-item.vue'
+
 export default {
     name: 'App',
     data: () => ({
-        groups: [],
+        groups: {},
         course: null,
         debounce: null,
+        timer: null,
     }),
     async created() {
         try {
@@ -12,6 +15,18 @@ export default {
         } catch (err) {
             this.course = 73.2351
         }
+    },
+    mounted() {
+        const timer = () => {
+            this.timer = setTimeout(() => {
+                this.consructListing(+this.course)
+                timer()
+            }, 15000)
+        }
+        timer()
+    },
+    beforeDestroy() {
+        clearTimeout(this.timer)
     },
     watch: {
         course: {
@@ -31,15 +46,28 @@ export default {
     },
     methods: {
         async consructListing(course) {
+            console.log('Значения обновились')
             const { Value: { Goods } } = await import('@/assets/jsons/data.json')
             const names = await import('@/assets/jsons/names.json')
 
-            const mapProduct = (item) => ({
-                id: item.T,
-                name: names[item.G].B[item.T].N,
-                price: +(item.C * course).toFixed(2),
-                count: item.P
-            })
+            const mapProduct = (item) => {
+                const product = {}
+                if (
+                    this.groups[item.G]
+                    && this.groups[item.G].products.find(p => p.value.id === item.T).value.edited
+                ) {
+                    product.value = this.groups[item.G].products.find(p => p.value.id === item.T).value
+                } else {
+                    product.value = {
+                        id: item.T,
+                        name: names[item.G].B[item.T].N,
+                        price: +(item.C * course).toFixed(2),
+                        edited: false,
+                        count: item.P
+                    }
+                }
+                return product
+            }
 
             this.groups = Goods.reduce((acum, item) => {
                 if (!acum[item.G]) {
@@ -53,7 +81,10 @@ export default {
                 }
                 acum[item.G].products.push(mapProduct(item))
                 return acum
-            }, [])
+            }, {})
         }
     },
+    components: {
+        ProductItem
+    }
 }

@@ -1,0 +1,16 @@
+.editProduct {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .data {
+        flex-grow: 1;
+        padding-right: 10px;
+    }
+
+    .edit-container {
+        margin-top: -4px;
+    }
+}
