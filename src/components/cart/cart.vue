@@ -17,7 +17,15 @@
                     :key="product.id"
                 >
                     <b-td>{{ product.name }}</b-td>
-                    <b-td>{{ product.count }}</b-td>
+                    <b-td>
+                        <input-number
+                            :value="product.count"
+                            :min="1"
+                            :max="product.maxCount"
+                            :integer="true"
+                            @input="count => changeCount(product.id, count)"
+                        />
+                    </b-td>
                     <b-td>{{ product.price }}</b-td>
                     <b-td>
                         <b-button variant="danger" @click.stop="removeProduct(product.id)">

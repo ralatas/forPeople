@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex'
 import ProductItem from '@/components/product-item/product-item.vue'
 import Cart from '@/components/cart/cart.vue'
 
@@ -29,6 +30,9 @@ export default {
     beforeDestroy() {
         clearTimeout(this.timer)
     },
+    computed: {
+        ...mapGetters(['countProductsInCart'])
+    },
     watch: {
         course: {
             immediate: false,
@@ -47,6 +51,7 @@ export default {
     },
     methods: {
         async consructListing(course) {
+            console.log('Запрос 1 раз в 15 секунд')
             const { Value: { Goods } } = await import('@/assets/jsons/data.json')
             const names = await import('@/assets/jsons/names.json')
 

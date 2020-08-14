@@ -1,8 +1,14 @@
 <template>
     <div id="app" class="container">
-        <b-card title="Укажи курс доллара" class="mb-4 mt-1">
-            <div class="d-flex justify-content-between">
-                <input v-model="course" type="text">
+        <b-card title="Курс доллара от 20 до 80" class="mb-4 mt-1">
+            <div class="d-flex justify-content-between align-items-center">
+                <input-number
+                    v-model="course"
+                    :max="80"
+                    :min="20"
+                    placeholder="Курс доллара"
+                />
+
                 <b-dropdown
                     right
                     text="Right align"
@@ -12,6 +18,7 @@
                 >
                     <template v-slot:button-content>
                         <b-icon icon="handbag-fill"/>
+                        {{ countProductsInCart || '' }}
                     </template>
 
                     <cart :groups="groups" />

@@ -57,5 +57,8 @@ export default new Vuex.Store({
             })
             return cart
         },
+        countProductsInCart(state) {
+            return state.cart.reduce((acum, item) => acum + item.count, 0)
+        }
     }
 })

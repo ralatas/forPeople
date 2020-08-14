@@ -24,7 +24,6 @@
                             v-model="form.name"
                             required
                             type="text"
-                            :placeholder="value.name"
                         />
                     </b-col>
                 </b-row>
@@ -33,11 +32,11 @@
                         <label>Кол-во</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input
+                        <input-number
                             v-model="form.count"
+                            :min="1"
+                            :integer="true"
                             required
-                            type="text"
-                            :placeholder="`${value.count}`"
                         />
                     </b-col>
                 </b-row>
@@ -46,11 +45,10 @@
                         <label>Цена</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input
+                        <input-number
                             v-model="form.price"
+                            :min="1"
                             required
-                            type="text"
-                            :placeholder="`${value.price}`"
                         />
                     </b-col>
                 </b-row>
@@ -74,7 +72,7 @@
             </b-button>
 
             <b-button
-                variant="outline-primary"
+                variant="primary"
                 @click="addInCart"
             >
                 <b-icon icon="bag-plus" />
