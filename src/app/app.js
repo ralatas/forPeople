@@ -7,7 +7,6 @@ export default {
     data: () => ({
         groups: {},
         course: null,
-        debounce: null,
         timer: null,
     }),
     async created() {
@@ -37,21 +36,12 @@ export default {
         course: {
             immediate: false,
             handler(course) {
-                if (!this.debounce) {
-                    this.debounce = true
-                    this.consructListing(+course)
-                } else {
-                    clearTimeout(this.debounce)
-                    this.debounce = setTimeout(() => {
-                        this.consructListing(+course)
-                    }, 400)
-                }
+                this.consructListing(+course)
             }
         }
     },
     methods: {
         async consructListing(course) {
-            console.log('Запрос 1 раз в 15 секунд')
             const { Value: { Goods } } = await import('@/assets/jsons/data.json')
             const names = await import('@/assets/jsons/names.json')
 
