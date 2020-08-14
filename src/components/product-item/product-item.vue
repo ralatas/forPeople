@@ -7,10 +7,10 @@
                 :class="value.priceChange"
             >
                 <div class="name">
-                    {{ value.name }} <span>({{ value.count }})</span>
+                    {{ value.name }} <span>({{ value.count }} шт.)</span>
                 </div>
                 <div class="price">
-                    {{ value.price }}
+                    <b>{{ value.price }} ₽</b>
                 </div>
             </div>
 
@@ -75,7 +75,7 @@
 
             <b-button
                 variant="outline-primary"
-                @click="toogle"
+                @click="addInCart"
             >
                 <b-icon icon="bag-plus" />
             </b-button>

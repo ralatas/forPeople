@@ -35,6 +35,7 @@ export default {
             } else if (+this.form.price > this.value.originalPrice) {
                 priceChange = 'up'
             }
+
             const tempForm = {
                 name: this.form.name,
                 price: +this.form.price,
@@ -51,6 +52,9 @@ export default {
         },
         toogle() {
             this.edit = !this.edit
+        },
+        addInCart() {
+            this.$emit('addInCart')
         }
     }
 }

@@ -1,4 +1,5 @@
 import ProductItem from '@/components/product-item/product-item.vue'
+import Cart from '@/components/cart/cart.vue'
 
 export default {
     name: 'App',
@@ -46,7 +47,6 @@ export default {
     },
     methods: {
         async consructListing(course) {
-            console.log('Значения обновились')
             const { Value: { Goods } } = await import('@/assets/jsons/data.json')
             const names = await import('@/assets/jsons/names.json')
 
@@ -54,9 +54,9 @@ export default {
                 const product = {}
                 if (
                     this.groups[item.G]
-                    && this.groups[item.G].products.find(p => p.value.id === item.T).value.edited
+                    && this.groups[item.G].products[item.T].value.edited
                 ) {
-                    product.value = this.groups[item.G].products.find(p => p.value.id === item.T).value
+                    product.value = this.groups[item.G].products[item.T].value
                 } else {
                     product.value = {
                         id: item.T,
@@ -76,16 +76,28 @@ export default {
                         ...acum,
                         [item.G]: {
                             name: names[item.G].G,
-                            products: [mapProduct(item)]
+                            products: { [item.T]: mapProduct(item) }
                         }
                     }
                 }
-                acum[item.G].products.push(mapProduct(item))
-                return acum
+                return {
+                    ...acum,
+                    [item.G]: {
+                        ...acum[item.G],
+                        products: {
+                            ...acum[item.G].products,
+                            [item.T]: mapProduct(item)
+                        }
+                    }
+                }
             }, {})
+        },
+        addProductInCart(group, product) {
+            this.$store.commit('addProductInCart', { group, product })
         }
     },
     components: {
-        ProductItem
+        ProductItem,
+        Cart
     }
 }
